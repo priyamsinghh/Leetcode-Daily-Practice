@@ -126,7 +126,6 @@ struct Node
 }; */
 
 
-//Function to return a list containing the level order traversal in spiral form.
 
 vector<int> findSpiral(Node *root)
 {
