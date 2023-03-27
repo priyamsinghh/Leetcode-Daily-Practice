@@ -109,7 +109,7 @@ class Solution{
         while(!q.empty())
         {
             int size = q.size();
-            while (size-- >)
+            while (size--)
             {
                 root = q.front();
                 q.pop();
