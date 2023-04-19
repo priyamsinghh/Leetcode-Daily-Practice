@@ -4,43 +4,34 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    private:
-    bool detectcycle(int src, int V, int vis[],vector<int>adj[])
+  public:
+    bool dfs(vector<int> adj[],int vis[],int node,int parent)
+    
     {
-        vis[src] = true;
-        queue<pair<int,int>>q;
-        q.push({src,-1});
-        while(!q.empty())
+        vis[node] = 1;
+        for(auto it : adj[node])
         {
-            int node = q.front().first;
-            int parent = q.front().second;
-            q.pop();
-            for(auto adjacentnode: adj[node])
+            if(!vis[it])
             {
-                if(!vis[adjacentnode])
-                {
-                    vis[adjacentnode] = 1;
-                    q.push({adjacentnode,node});
-                }
-                else if(parent != adjacentnode) //** agar that guy is visited and 
-                //it is not parent (because adjaceent wala [arent se hi ayga agar
-                //wo parent nhi h to phle hi bfs se wo traverse ho chuka h aur cycle hai])
+                if(dfs(adj,vis,it,node) == true)
+                    return true;
+                
+            }
+            else if(it != parent)
                 {
                     return true;
                 }
-            }
         }
         return false;
     }
-  public:
-    // Function to detect cycle in an undirected graph.
     bool isCycle(int V, vector<int> adj[]) {
-        int vis[V]={0};
+        // Code here
+        int vis[V] = {0};
         for(int i=0;i<V;i++)
         {
             if(!vis[i])
             {
-                if(detectcycle(i,V,vis,adj) == true)
+                if(dfs(adj,vis,i,-1) == true)
                 {
                     return true;
                 }
