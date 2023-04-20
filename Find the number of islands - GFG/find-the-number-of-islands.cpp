@@ -3,8 +3,12 @@
 using namespace std;
 
 // } Driver Code Ends
+
 class Solution {
   private:
+  /*
+  int drow[8]={0,-1,-1,-1,0,1,1,1};
+    int dcol[8]={-1,-1,0,1,1,1,0,-1};
   void bfs(int r, int c , vector<vector<int>>&vis, vector<vector<char>>&grid)
   {
       vis[r][c]= 1;
@@ -17,21 +21,40 @@ class Solution {
           int r = q.front().first;
           int c = q.front().second;
           q.pop();
-          for(int drow=-1;drow<=1;drow++)
-          {
-              for(int dcol=-1;dcol<=1;dcol++)
-              {
-                int nrow = r+drow;
-                int ncol = c+dcol;
+            for(int i=0;i<8;i++)
+            {
+                int nrow = r+drow[i];
+                int ncol = c+dcol[i];
                 if(nrow>=0 && nrow<n && ncol>=0&& ncol <m && !vis[nrow][ncol] && grid[nrow][ncol] =='1')
                 {
                     vis[nrow][ncol] = 1;
                     q.push({nrow,ncol});
                 }
-              }
-          }
+            }
+    
       }
-  }
+  }*/
+  void dfs(int row,int col,vector<vector<int>>&vis,vector<vector<char>>&grid)
+{
+    vis[row][col] = 1;
+    int n = grid.size();
+    int m = grid[0].size();
+    
+    // int dcol[8]={0,-1,-1,-1,0,1,1,1};
+    // int drow[8]={-1,-1,0,1,1,1,0,-1};
+   
+    //     for(int i=0;i<8;i++)
+        for(int i=-1;i<=1;i++)
+        for(int j=-1;j<=1;j++)
+        {
+            int nrow = row + i;
+            int ncol = col + j;
+            if(nrow<n && nrow>=0 && ncol<m && ncol>=0 && !vis[nrow][ncol] && grid[nrow][ncol] == '1')
+            {
+                 dfs(nrow,ncol,vis,grid);   
+            }
+        }
+}
   public:
   
     // Function to find the number of islands.
@@ -47,13 +70,14 @@ class Solution {
                 if(!vis[i][j] && grid[i][j] == '1')
                 {
                     cnt++;
-                    bfs(i,j,vis,grid);
+                    dfs(i,j,vis,grid);
                 }
             }
         }
         return cnt;
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
