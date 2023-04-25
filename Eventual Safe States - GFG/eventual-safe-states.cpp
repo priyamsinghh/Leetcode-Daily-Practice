@@ -12,36 +12,42 @@ class Solution {
   public:
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
         // code here
-        vector<int> adjRev[V];
-		int indegree[V] = {0};
-		for (int i = 0; i < V; i++) {
-			// i -> it
-			// it -> i
-			for (auto it : adj[i]) {
-				adjRev[it].push_back(i);
-				indegree[i]++;
-			}
-		}
-		queue<int> q;
-		vector<int> safeNodes;
-		for (int i = 0; i < V; i++) {
-			if (indegree[i] == 0) {
-				q.push(i);
-			}
-		}
-
-		while (!q.empty()) {
-			int node = q.front();
-			q.pop();
-			safeNodes.push_back(node);
-			for (auto it : adjRev[node]) {
-				indegree[it]--;
-				if (indegree[it] == 0) q.push(it);
-			}
-		}
-
-		sort(safeNodes.begin(), safeNodes.end());
-		return safeNodes;
+        vector<int>rev[V];
+        vector<int>ind(V,0);
+        for(int i=0;i<V;i++)
+        {
+            for(auto it : adj[i])
+            {
+                rev[it].push_back(i);
+                ind[i]++;
+            }
+        }
+        queue<int>q;
+        for(int i=0;i<V;i++)
+        {
+            if(ind[i] == 0)
+            {
+                q.push(i); //push all terminal nodes 
+            }
+            
+        }
+        vector<int>ans;
+        while(!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+            ans.push_back(node);
+            for(auto it: rev[node])
+            {
+                ind[it]--;
+                if(ind[it] == 0)
+                {
+                    q.push(it);
+                }
+            }
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
     }
 };
 
