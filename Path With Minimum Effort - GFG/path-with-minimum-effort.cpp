@@ -6,47 +6,40 @@ using namespace std;
 class Solution {
   public:
     int MinimumEffort(vector<vector<int>>& heights) {
-        priority_queue<pair<int, pair<int, int>>,
-                       vector<pair<int, pair<int, int>>>,
-                       greater<pair<int, pair<int, int>>>>
-            pq;
-
         int n = heights.size();
         int m = heights[0].size();
-        vector<vector<int>> dist(n, vector<int>(m, 1e9));
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>q;
+        vector<vector<int>>dist(n,vector<int>(m,1e9));
         dist[0][0] = 0;
-        pq.push({0, {0, 0}});
-        int dr[] = {-1, 0, 1, 0};
-        int dc[] = {0, 1, 0, -1};
-
-        while (!pq.empty())
+        q.push({0,{0,0}});
+        int drow[] = {-1,0,1,0};
+        int dcol[] = {0,1,0,-1};
+        while(!q.empty())
         {
-            auto it = pq.top();
-            pq.pop();
-            int diff = it.first;
-            int row = it.second.first;
-            int col = it.second.second;
-            if (row == n - 1 && col == m - 1)
-                return diff;
+            auto it = q.top();
+            q.pop();
+            int dis = it.first;
+            int r = it.second.first;
+            int c = it.second.second;
            
-            for (int i = 0; i < 4; i++)
+            if(r == n - 1 && c == m-1)
+                return dis;
+            for(int i=0;i<4;i++)
             {
-                int newr = row + dr[i];
-                int newc = col + dc[i];
-
-                if (newr >= 0 && newc >= 0 && newr < n && newc < m)
+                int nrow = r + drow[i];
+                int ncol = c + dcol[i];
+                if(nrow<n && nrow >= 0 && ncol < m && ncol>=0)
                 {
-                    int newEffort = max(abs(heights[row][col] - heights[newr][newc]), diff);
-
-                    if (newEffort < dist[newr][newc])
+                    int eff = max(abs(heights[r][c] - heights[nrow][ncol]), dis);
+                    if(eff < dist[nrow][ncol])
                     {
-                        dist[newr][newc] = newEffort;
-                        pq.push({newEffort, {newr, newc}});
+                        dist[nrow][ncol] = eff;
+                        q.push({eff,{nrow,ncol}});
                     }
                 }
             }
         }
-        return 0; 
+        return 0;
     }
 };
 
