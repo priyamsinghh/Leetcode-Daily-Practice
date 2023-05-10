@@ -15,12 +15,12 @@ class Solution {
             {
                 if(dfs(adj,vis,it,node) == true)
                     return true;
-                
+            
             }
             else if(it != parent)
-                {
-                    return true;
-                }
+            {
+                return true;
+            }
         }
         return false;
     }
