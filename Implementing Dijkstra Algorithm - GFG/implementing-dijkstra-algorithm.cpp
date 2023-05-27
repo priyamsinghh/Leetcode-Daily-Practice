@@ -3,6 +3,7 @@
 using namespace std;
 
 // } Driver Code Ends
+
 class Solution
 {
 	public:
@@ -26,10 +27,10 @@ class Solution
                 int edWt = it[1];
                 int adjNode = it[0];
                 
-                if(dis + edWt < dist[adjNode])
-                {
-                    if(dist[adjNode] != 1e9)
-                    {
+                if(dis + edWt < dist[adjNode]) //if distance is less and 
+                {                              //it is already visited means 
+                    if(dist[adjNode] != 1e9)   //that pair is already in set,
+                    {                          // so deleta tha pair from set 
                         pq.erase({dist[adjNode],adjNode});
                     }
                     dist[adjNode] = dis + edWt;
